@@ -1,7 +1,6 @@
 import { useContext } from "react";
 
 import FileClose from "../../svg/FileClose";
-import { Dashboardcontext } from "../../../pages/_app";
 
 export default function FileImages({ images, div, func, active }) {
   const [object, setter] = useContext(Dashboardcontext);
@@ -15,14 +14,6 @@ export default function FileImages({ images, div, func, active }) {
     if (event == "onMouseLeave") parent.classList.remove("close-active");
   }
 
-  function contextsetter(arr) {
-    setter((obj) => {
-      return {
-        ...obj,
-        displayImages: arr,
-      };
-    });
-  }
   return (
     <div className='file-image-wrapper flex-grow ' ref={div}>
       {images.map((data, i) => {
@@ -32,7 +23,6 @@ export default function FileImages({ images, div, func, active }) {
               src={data}
               onMouseLeave={handleEnter}
               onMouseEnter={handleEnter}
-              onClick={(ev) => contextsetter({ list: [...images], current: i })}
               className={`${active == i && "fade"} object-contain`}
             />
             <FileClose handle={handleEnter} func={func} id={i} />
