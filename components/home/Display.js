@@ -21,14 +21,20 @@ export default function Display({ catalog }) {
       setimages(image.slice(0, 8));
     }
   });
+  const image = Object.values(catalog).map((item) =>
+    item.thumbnail[0].toString()
+  );
+
   useEffect(() => {
-    SizeTracker();
+    // SizeTracker();
+
     window.addEventListener("resize", SizeTracker);
+    window.addEventListener("load", SizeTracker);
 
     return () => {
       window.removeEventListener("resize", SizeTracker);
     };
-  }, [SizeTracker]);
+  });
 
   return (
     <div className='flex flex-col pb-20'>
