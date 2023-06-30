@@ -9,16 +9,14 @@ import LastSection from "../components/measurement/last/LastSection";
 import FormButton from "../components/form/FormButton";
 import Header from "../components/measurement/header/Header";
 import InstructionModel from "../components/measurement/InstructionModel";
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import ImageModel from "../components/utiles_fun/ImageModel";
 
-import useFetchUpload from "../components/hooks/useFetchUpload1";
+import useFetchUpload from "../components/hooks/useFetchUpload";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { Catalog } from "./../lib/models/CatalogModel";
 
 export default function Measure({ thumbnail }) {
-  // console.log(JSON.parse(thumbnail)[0].toString(), "thumb");
   console.log(thumbnail, "k");
   if (thumbnail) {
     const design = JSON.parse(thumbnail);
@@ -30,11 +28,6 @@ export default function Measure({ thumbnail }) {
   const [makeRequest, isloading, upload_data] = useFetchUpload();
   const ro = useRouter();
   const query = ro.query.id;
-  useEffect(() => {
-    if (!isloading && upload_data.status === "success") {
-    }
-  }, [isloading]);
-
   return (
     <div className='relative mb-[40px]'>
       <InstructionModel
@@ -88,22 +81,26 @@ export default function Measure({ thumbnail }) {
 export async function getServerSideProps(context) {
   const id = context.query.design;
   if (id) {
-    try {
-      const host = "https://fervencciD.onrender.com/api/v1";
-      const url = `${host}/catalog/${id}`;
-      const design = await axios.get(url);
-      return {
-        props: {
-          thumbnail: JSON.stringify(design.thumbnail),
-        },
-      };
-    } catch (error) {
-      return {
-        props: {},
-      };
-    }
+    const host = "https://fervencciD.onrender.com/api/v1";
+    const url = `${host}/catalog/${id}`;
+    return axios
+      .get(url)
+      .then((res) => {
+        const data = res.data;
+        return {
+          props: {
+            data,
+          },
+        };
+      })
+      .catch((err) => {
+        return {
+          props: {
+            err,
+          },
+        };
+      });
   }
-
   return {
     props: {},
   };

@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Backend from "./header/Backend";
 import Frontend from "./header/Frontend";
 import Searchinput from "./Search";
 import Link from "next/link";
@@ -10,15 +9,12 @@ export default function Navbar({ type }) {
       <div className='flex items-center justify-between space-x-auto w-full'>
         <div className='flex items-center justify-between flex-grow'>
           <Link href='/'>
-            <a className='p-2 px-4'>
-              <Image src='/client-2.png' width={50} height={28} />
-            </a>
+            <Image src='/client-2.png' width={50} height={28} />
           </Link>
-          {type == "user" && <Searchinput />}
+          {/* {type == "user" && <Searchinput />} */}
         </div>
 
-        {type == "user" && <Frontend />}
-        {/* {type == "admin" && <Backend />} */}
+        <Frontend />
       </div>
     </nav>
   );

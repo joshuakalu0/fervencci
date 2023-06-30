@@ -1,13 +1,12 @@
 import { CircularProgress } from "@mui/material";
 import { useEffect, useState } from "react";
-import Filter from "../components/gallery/Filter";
 import Images from "../components/gallery/grid/Images";
 import { useRouter } from "next/router";
 import useScroll from "../components/hooks/useScroll";
 import useSplitarray from "../components/hooks/useSplitarray";
-import Navbar from "../components/utiles/Navbar";
 import useFetch from "../components/hooks/useFetch";
 import axios from "axios";
+
 export default function Gallery({ catalogs }) {
   const record = JSON.parse(catalogs);
   const route = useRouter();
@@ -40,7 +39,6 @@ export default function Gallery({ catalogs }) {
 
   return (
     <div className='relative'>
-      {/* <Filter /> */}
       <Images array={watch} />
       <div className='w-full flex justify-center items-center'>
         {isloading && <CircularProgress />}

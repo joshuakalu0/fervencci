@@ -4,12 +4,13 @@ import ContentUs from "../components/home/ContentUs";
 import Display from "../components/home/Display";
 import Service from "../components/home/Service";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
-export default function Home() {
-  const object = {
-    photos: ["klhj"],
-  };
-  const featured = {};
+export default function Home({ data }) {
+  const user = data.data[0];
+  const catalog = data.catalog;
+  console.log(data);
+
   return (
     <div>
       <Head>
@@ -18,9 +19,9 @@ export default function Home() {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <main className='flex flex-col  w-full pb-[30px]'>
-        <About photo={object?.photos} bio={object?.bio} />
-        <Service aim={object?.aim} />
-        <Display catalog={featured} />
+        <About photo={user?.photos} bio={user?.bio} />
+        <Service aim={user?.aim} />
+        <Display catalog={catalog} />
         <ContentUs />
       </main>
     </div>
@@ -30,21 +31,45 @@ export default function Home() {
 export async function getStaticProps() {
   const email = process.env.ADMIN_EMAIL;
   const host = "https://fervencciD.onrender.com/api/v1";
-  const url = `${host}/users?searchBy=email,${email}&fields=aim,bio,photos`;
-  try {
-    const data = await axios.get(url);
-    const catalog = await axios.get(`${host}/catalogs?limit=20`);
-    console.log(data, "wait");
-
-    return {
-      props: {
-        data: JSON.stringify(data),
-        catalog: JSON.stringify(catalog),
-      },
-    };
-  } catch (err) {
-    return {
-      notFound: true,
-    };
-  }
+  const url = `${host}/users?email=${email}&fields=aim,bio,photos`;
+  return axios
+    .get(url)
+    .then(async (user) => {
+      // console.log(user.data, "user");
+      const res = user.data;
+      const catalog = await axios.get(`${host}/catalogs?limit=20`);
+      res.catalog = catalog.data.data;
+      return {
+        props: {
+          data: res,
+        },
+      };
+    })
+    .catch((err) => {
+      return {
+        notFound: true,
+      };
+    });
+  // try {
+  //   const data = await fetch(url);
+  //   const catalog = await fetch(`${host}/catalogs?limit=20`);
+  //   console.log(data, catalog, "wait", email);
+  //   console.log("first");
+  //   if (data.data.length !== 0) {
+  //     console.log("sec");
+  //     return {
+  //       props: {
+  //         data: JSON.stringify(data.data),
+  //         catalog: JSON.stringify(catalog),
+  //       },
+  //     };
+  //   }
+  // } catch (err) {
+  //   console.log(err, "err");
+  //   return {
+  //     props: {
+  //       error: JSON.stringify(err),
+  //     },
+  //   };
+  // }
 }

@@ -16,9 +16,7 @@ export default function Frontend() {
         {Page.map((data, i) => {
           return (
             <Button key={i} color='primary'>
-              <Link href={data[1]}>
-                <a>{data[0]}</a>
-              </Link>
+              <Link href={data[1]}>{data[0]}</Link>
             </Button>
           );
         })}
@@ -34,18 +32,13 @@ export default function Frontend() {
             return (
               <div key={i} className='w-full p-1 rounded-md bg-teal-300'>
                 <Button color='primary' fullWidth>
-                  <Link href={data[1]}>
-                    <a>{data[0]}</a>
-                  </Link>
+                  <Link href={data[1]}>{data[0]}</Link>
                 </Button>
               </div>
             );
           })}
         </div>
       </div>
-      {/* <div hidden className='user-nav-options'>
-        fccfdcdc
-      </div> */}
     </div>
   );
 }

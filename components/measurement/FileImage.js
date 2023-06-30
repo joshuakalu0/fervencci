@@ -34,7 +34,7 @@ export default function FileImage({ setter, data }) {
   return (
     <div className='w-[300px] my-2 md:mx-3 max-w-[300px] flex flex-col space-y-1 max-h-[175px]  border-[1px] rounded-md border-black'>
       <div
-        className=' h-7 w-auto flex flex-row w-full border-[1px] rounded-md m-2 justify-center'
+        className=' h-7 w-auto flex flex-row w-full  rounded-md m-2 justify-center'
         onClick={() => userref.current.click()}
       >
         <input

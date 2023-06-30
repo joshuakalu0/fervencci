@@ -45,11 +45,11 @@ export default function ContentUs() {
             validationSchema={report_validationSchema}
             onSubmit={(values, actions) => {
               setissubmitting(true);
-
-              let url = `/api/actions/create?target=report`;
+              const url = "https://fervencciD.onrender.com/api/v1/reports";
               axios
                 .post(url, values)
                 .then((axiosdata) => {
+                  console.log(axiosdata);
                   setstatus({
                     status: "success",
                     message: "Your request was submitted successfully",
