@@ -1,17 +1,23 @@
 import { useEffect, useState } from "react";
 import useSideScroll from "./useSideScroll";
 
-export default function useSplitarray(setter, mainlist) {
+export default function useSplitarray() {
   const store = [];
+  const [watch, setwatch] = useState({
+    first: [],
+    second: [],
+    third: [],
+    fourth: [],
+  });
   const [word, count, changed] = useSideScroll();
   // useEffect(() => {
-  //   Object.keys(mainlist).map
+  //   Object.keys(watch).map
 
   // }, [count])
   useEffect(() => {
     if (changed === true) {
       const newlist = [];
-      Object.values(mainlist).forEach((designs) => {
+      Object.values(watch).forEach((designs) => {
         newlist.splice(0, 0, ...designs);
       });
       splitter(newlist);
@@ -26,11 +32,14 @@ export default function useSplitarray(setter, mainlist) {
     const eachCount = Math.floor(array.length / count);
     if (eachCount < 1) return;
     if (word === "sm") {
-      mainlist.first = [...mainlist.first, ...array];
+      watch.first = [...watch.first, ...array];
 
-      setter((watch) => {
+      setwatch((watch) => {
         return {
           first: [...(watch?.first || []), ...array],
+          second: [],
+          third: [],
+          fourth: [],
         };
       });
     }
@@ -42,9 +51,10 @@ export default function useSplitarray(setter, mainlist) {
       if (array.length > 0) {
         store.splice(0, 0, ...array);
       }
-      mainlist.first = [...mainlist.first, ...tempfirst];
-      mainlist.second = [...mainlist.second, ...tempsecond];
-      mainlist.third = [...mainlist.third, ...tempthird];
+      watch.first = [...watch.first, ...tempfirst];
+      watch.second = [...watch.second, ...tempsecond];
+      watch.third = [...watch.third, ...tempthird];
+      watch.fourth = [];
     }
     if (word === "lg") {
       let tempfirst = array.splice(0, eachCount);
@@ -54,13 +64,13 @@ export default function useSplitarray(setter, mainlist) {
       if (array.length > 0) {
         store.splice(0, 0, ...array);
       }
-      mainlist.first = [...mainlist.first, ...tempfirst];
-      mainlist.second = [...mainlist.second, ...tempsecond];
-      mainlist.third = [...mainlist.third, ...tempthird];
-      mainlist.fourth = [...mainlist.fourth, ...tempfourth];
+      watch.first = [...watch.first, ...tempfirst];
+      watch.second = [...watch.second, ...tempsecond];
+      watch.third = [...watch.third, ...tempthird];
+      watch.fourth = [...watch.fourth, ...tempfourth];
     }
   }
-  return [splitter];
+  return [splitter, watch];
 }
 
 {
@@ -87,7 +97,7 @@ export default function useSplitarray(setter, mainlist) {
   //   }
   //   // let third = array.splice(single_num * 2, single_num + 8);
   //   // let tempthird = array;
-  //   setter((watch) => {
+  //   setwatch((watch) => {
   //     return {
   //       first: [...watch.first, ...tempfirst],
   //       second: [...watch.second, ...tempsecond],

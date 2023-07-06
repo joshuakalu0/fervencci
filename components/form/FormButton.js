@@ -2,7 +2,12 @@ import { Save } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { useFormikContext } from "formik";
 
-export default function FormButton({ children, nofull, ...others }) {
+export default function FormButton({
+  children,
+  nofull,
+  processing,
+  ...others
+}) {
   const { submitForm } = useFormikContext();
   const handlesumbit = () => {
     submitForm();
@@ -16,7 +21,7 @@ export default function FormButton({ children, nofull, ...others }) {
         onClick={handlesumbit}
         variant='contained'
         {...others}
-        disabled={others.processing && others.processing}
+        disabled={processing && processing}
       >
         {children}
       </Button>

@@ -36,7 +36,7 @@ export async function getStaticProps() {
     .get(url)
     .then(async (user) => {
       // console.log(user.data, "user");
-      const res = user.data;
+      const res = user?.data;
       const catalog = await axios.get(`${host}/catalogs?limit=20`);
       res.catalog = catalog.data.data;
       return {

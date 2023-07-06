@@ -64,7 +64,7 @@ export default function Imagefetch({ setter, data }) {
         <input
           type='text'
           placeholder='search for design'
-          value={search}
+          value={search || ""}
           onChange={handlesearch}
           className='h-full  flex flex-grow bg-transparent text-black placeholder:text-gray-700 pl-1 rounded-md outline-none'
         />
@@ -119,8 +119,8 @@ export default function Imagefetch({ setter, data }) {
 
 function fet(params, fun) {
   let array = ["design_name", "thumbnail"];
-  let body = array.join(" ");
-  let url = `/api/actions/find?table=catalog&by=design_name&value=${params}&filter=${body}`;
+  let body = array.split(",");
+  let url = `https://fervencciD.onrender.com/api/v1/catalogs?searchBy=design_name,${params}&fields=${body}`;
   axios
     .get(url, body)
     .then((axiosdata) => {

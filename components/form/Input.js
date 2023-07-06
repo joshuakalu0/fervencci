@@ -2,6 +2,7 @@ import { TextField } from "@mui/material";
 import { useField } from "formik";
 
 export default function Input({ data }) {
+  console.log(data, "data");
   const [field, meta] = useField(data);
   const config = {
     ...data,

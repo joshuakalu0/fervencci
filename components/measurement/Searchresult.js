@@ -22,6 +22,7 @@ export default function Searchresult({
         <div className='flex justify-end'>
           <img
             src={`${data.thumbnail[0]}`}
+            alt={`${data.thumbnail[0]}`}
             className='w-full max-w-[70px] object-cover rounded-md h-full'
           />
         </div>

@@ -21,7 +21,7 @@ export default function Searchinput() {
       }, 1000);
       settimeout(ty);
     }
-  }, [search]);
+  }, [search, pathname, route, timeout]);
 
   function handlesearch(ev) {
     setissearching(true);

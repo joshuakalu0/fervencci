@@ -26,7 +26,9 @@ export default function Display({ catalog }) {
   );
 
   useEffect(() => {
-    // SizeTracker();
+    if (images.length === 0) {
+      SizeTracker();
+    }
 
     window.addEventListener("resize", SizeTracker);
     window.addEventListener("load", SizeTracker);
@@ -52,7 +54,7 @@ export default function Display({ catalog }) {
                 width={250}
                 height={250}
                 style={{ height: "100%", width: "100%" }}
-                responsive
+                // responsive
                 alt={img}
                 objectFit='cover'
               />

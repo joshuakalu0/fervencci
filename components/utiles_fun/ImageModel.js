@@ -36,6 +36,7 @@ export default function ImageModel({ data, fun }) {
           <div className='flex flex-grow max-h-[90%] w-auto h-auto max-w-[70%]'>
             <img
               src={`${currentImage}`}
+              alt={`${currentImage}`}
               className='w-full h-auto object-contain rounded-md '
             />
           </div>

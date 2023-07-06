@@ -9,7 +9,12 @@ export default function Navbar({ type }) {
       <div className='flex items-center justify-between space-x-auto w-full'>
         <div className='flex items-center justify-between flex-grow'>
           <Link href='/'>
-            <Image src='/client-2.png' width={50} height={28} />
+            <Image
+              src='/client-2.png'
+              alt='fervencci-icon'
+              width={50}
+              height={28}
+            />
           </Link>
           {/* {type == "user" && <Searchinput />} */}
         </div>
