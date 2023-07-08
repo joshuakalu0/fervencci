@@ -19,8 +19,8 @@ export default function Home({ data }) {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <main className='flex flex-col  w-full pb-[30px]'>
-        <About photo={user?.photos} bio={user?.bio} />
-        <Service aim={user?.aim} />
+        <About photo={user?.photos || {}} bio={user?.bio || {}} />
+        <Service aim={user?.aim || {}} />
         <Display catalog={catalog} />
         <ContentUs />
       </main>
@@ -36,7 +36,7 @@ export async function getStaticProps() {
     .get(url)
     .then(async (user) => {
       // console.log(user.data, "user");
-      const res = user?.data;
+      const res = user?.data || {};
       const catalog = await axios.get(`${host}/catalogs?limit=20`);
       res.catalog = catalog.data.data;
       return {
@@ -50,7 +50,6 @@ export async function getStaticProps() {
         notFound: true,
       };
     });
-  // try {
   //   const data = await fetch(url);
   //   const catalog = await fetch(`${host}/catalogs?limit=20`);
   //   console.log(data, catalog, "wait", email);
