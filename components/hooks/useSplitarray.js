@@ -69,6 +69,7 @@ export default function useSplitarray() {
       watch.third = [...watch.third, ...tempthird];
       watch.fourth = [...watch.fourth, ...tempfourth];
     }
+    console.log(watch, "www", list);
   }
   return [splitter, watch];
 }

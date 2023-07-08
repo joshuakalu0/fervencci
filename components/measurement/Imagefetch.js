@@ -119,11 +119,12 @@ export default function Imagefetch({ setter, data }) {
 
 function fet(params, fun) {
   let array = ["design_name", "thumbnail"];
-  let body = array.split(",");
+  let body = array.join(",");
   let url = `https://fervencciD.onrender.com/api/v1/catalogs?searchBy=design_name,${params}&fields=${body}`;
   axios
     .get(url, body)
     .then((axiosdata) => {
+      console.log(axiosdata.data);
       fun([...axiosdata.data.data]);
     })
     .catch((err) => {

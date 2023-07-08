@@ -1,35 +1,42 @@
 import { CircularProgress } from "@mui/material";
-// import { useEffect, useState } from "react";
 import Images from "../components/gallery/grid/Images";
-// import useScroll from "../components/hooks/useScroll";
-import useSplitarray from "../components/hooks/useSplitarray";
-// import useFetch from "../components/hooks/useFetch";
+import useScroll from "../components/hooks/useScroll";
+import useFetch from "../components/hooks/useFetch";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Gallery({ response }) {
-  if (response?.error) {
-    console.log("error");
-  }
-  //   console.log(response.result);
   const [isloading, setisloading] = useState(false);
-  const [splitter, watch] = useSplitarray();
-  let used = 0;
+  const [list, setlist] = useState([]);
+  const used = useRef(null);
+  const [scrollposition, hit] = useScroll();
+  const result = JSON.parse(response).result;
+
   useEffect(() => {
-    if (used === 0) {
-      const result = JSON.parse(response).result;
-      console.log(result, "res");
-      splitter(result);
-      used = 1;
+    if (!used.current) {
+      setlist([...list, ...result]);
+      used.current = 1;
     }
-    if (watch.first.length !== 0) {
-      console.log(watch, "watch");
+  });
+  const getMore = async () => {
+    setisloading(true);
+    const url = `https://fervencciD.onrender.com/api/v1/catalogs?limit=10`;
+
+    const data = await axios.get(url);
+
+    const arr = data.data.data;
+    setlist([...list, ...arr]);
+    setisloading(false);
+  };
+  useEffect(() => {
+    if (hit == true) {
+      getMore();
     }
-  }, []);
+  }, [hit]);
 
   return (
     <div className='relative'>
-      {watch.first.length && <Images array={watch} />}
+      <Images array={list} />
       <div className='w-full flex justify-center items-center'>
         {isloading && <CircularProgress />}
       </div>
@@ -40,6 +47,7 @@ export default function Gallery({ response }) {
 export async function getStaticProps() {
   const url = `https://fervencciD.onrender.com/api/v1/catalogs?limit=10`;
   const response = {};
+  console.log("first");
   try {
     const data = await axios.get(url);
 
@@ -47,9 +55,15 @@ export async function getStaticProps() {
   } catch (error) {
     response.error = error;
   }
+  console.log(response, "res");
+  if (!response.error) {
+    return {
+      props: {
+        response: JSON.stringify(response),
+      },
+    };
+  }
   return {
-    props: {
-      response: JSON.stringify(response),
-    },
+    notFound: true,
   };
 }

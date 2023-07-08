@@ -2,27 +2,21 @@ import { Form, Formik } from "formik";
 import {
   measurement_initial,
   measurement_validationSchema,
-} from "./../lib/form_data/measurement_data";
-import FirstSection from "../components/measurement/first/FirstSection";
-import MiddleSection from "../components/measurement/middle/MiddleSection";
-import LastSection from "../components/measurement/last/LastSection";
-import FormButton from "../components/form/FormButton";
-import Header from "../components/measurement/header/Header";
-import InstructionModel from "../components/measurement/InstructionModel";
+} from "../../lib/form_data/measurement_data";
+import FirstSection from "../../components/measurement/first/FirstSection";
+import MiddleSection from "../../components/measurement/middle/MiddleSection";
+import LastSection from "../../components/measurement/last/LastSection";
+import FormButton from "../../components/form/FormButton";
+import Header from "../../components/measurement/header/Header";
+import InstructionModel from "../../components/measurement/InstructionModel";
 import { useState, useEffect } from "react";
-import ImageModel from "../components/utiles_fun/ImageModel";
+import ImageModel from "../../components/utiles_fun/ImageModel";
 
-import useFetchUpload from "../components/hooks/useFetchUpload";
+import useFetchUpload from "../../components/hooks/useFetchUpload";
 import { useRouter } from "next/router";
 import axios from "axios";
 
-export default function Measure({ thumbnail }) {
-  console.log(thumbnail, "k");
-  if (thumbnail) {
-    const design = JSON.parse(thumbnail);
-    measurement_initial.design_choice = [...design];
-  }
-
+export default function Measure() {
   const [isInstructionAction, setisInstructionAction] = useState(false);
   const [displayImages, setdisplayImages] = useState(null);
   const [makeRequest, isloading, upload_data] = useFetchUpload();
@@ -76,32 +70,4 @@ export default function Measure({ thumbnail }) {
       </div>
     </div>
   );
-}
-
-export async function getServerSideProps(context) {
-  const id = context.query.design;
-  if (id) {
-    const host = "https://fervencciD.onrender.com/api/v1";
-    const url = `${host}/catalog/${id}`;
-    return axios
-      .get(url)
-      .then((res) => {
-        const data = res.data;
-        return {
-          props: {
-            data,
-          },
-        };
-      })
-      .catch((err) => {
-        return {
-          props: {
-            err,
-          },
-        };
-      });
-  }
-  return {
-    props: {},
-  };
 }

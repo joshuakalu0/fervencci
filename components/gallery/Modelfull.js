@@ -31,14 +31,12 @@ export default function Modelfull({ fun, result, bool, linkref }) {
           {/* header section */}
           <div className='model-header'>
             <div>
-              <h3>header</h3>
+              <h3>{result.design_name}</h3>
             </div>
             <div>
-              <Button>
-                <Link href={`measurement?design=${result._id}`}>
-                  request design
-                </Link>
-              </Button>
+              {/* <Button>
+                <Link href={`measurement/${result._id}`}>request design</Link>
+              </Button> */}
               <Button onClick={(ev) => fun(ev, "close")} color='error'>
                 close
               </Button>

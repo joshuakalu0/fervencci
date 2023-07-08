@@ -490,7 +490,11 @@
   left: calc(10% + 1px);
   font-weight: 900;
 }
-
+.grid-temp-mine {
+  display: grid;
+  /* grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); */
+  grid-template-columns: repeat(auto-fill, minmax(482px, 1fr));
+}
 .rotator {
   position: absolute;
   top: 0px;

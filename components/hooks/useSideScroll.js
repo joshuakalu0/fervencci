@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 export default function useSideScroll() {
   const [scrollposition, setscrollposition] = useState(null);
   const [changed, setchanged] = useState(false);
-  const [size, setsize] = useState([]);
+  const [size, setsize] = useState(["md", 3]);
 
   function handleclickI(ev) {
     setchanged(true);
@@ -16,6 +16,7 @@ export default function useSideScroll() {
       window.removeEventListener("resize", handleclickI);
     };
   });
+
   useEffect(() => {
     if (scrollposition < 950) {
       setsize(["sm", 1]);
@@ -27,5 +28,6 @@ export default function useSideScroll() {
       setsize(["lg", 4]);
     }
   }, [scrollposition]);
+
   return [...size, changed];
 }
